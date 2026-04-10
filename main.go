@@ -1,9 +1,9 @@
 package main
 
-import "fmt"
+import "log"
 
 func main() {
-	fmt.Println("Hello from go-template!")
+	log.Println("Hello from go-template!")
 }
 
 // Add returns the sum of two integers.

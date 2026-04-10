@@ -25,6 +25,7 @@ node_modules/
 *.swp
 *.swo
 *~
+.claude/
 
 # OS
 .DS_Store

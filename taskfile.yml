@@ -23,3 +23,13 @@ tasks:
     cmds:
       - golangci-lint run ./... --fix
     deps: [format]
+
+  deadcode:
+    desc: Check for dead code
+    cmds:
+      - deadcode --test ./...
+
+  security:
+    desc: Run security vulnerability scan
+    cmds:
+      - govulncheck ./...

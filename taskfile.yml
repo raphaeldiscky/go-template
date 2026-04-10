@@ -1,0 +1,25 @@
+version: "3"
+
+tasks:
+  install_tools:
+    desc: Install all dependencies for the project
+    cmds:
+      - chmod +x ./scripts/install-tools.sh
+      - ./scripts/install-tools.sh
+
+  test:
+    desc: Run tests
+    cmds:
+      - go test ./... -v
+
+  format:
+    desc: Run formatters only
+    cmds:
+      - gofumpt -w .
+      - goimports -w .
+
+  lint:
+    desc: Run linters
+    cmds:
+      - golangci-lint run ./... --fix
+    deps: [format]

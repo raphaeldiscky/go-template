@@ -16,5 +16,5 @@ task install_tools
 - **[mvdan/gofumpt](https://github.com/mvdan/gofumpt)** - A stricter gofmt
 - **[golang.org/x/tools/cmd/goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports)** - Updates Go import lines
 - **[go-task/task](https://github.com/go-task/task)** - A task runner / simpler Make alternative
-- **[typicode/husky](https://github.com/typicode/husky)** - Git hooks made easy
+- **[evilmartians/lefthook](https://github.com/evilmartians/lefthook)** - Fast and powerful Git hooks manager
 - **[conventional-changelog/commitlint](https://github.com/conventional-changelog/commitlint)** - Lint commit messages

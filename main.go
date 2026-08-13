@@ -2,14 +2,14 @@ package main
 
 import (
 	"errors"
-	"log"
+	"log/slog"
 )
 
 // ErrDivisionByZero is returned when dividing by zero.
 var ErrDivisionByZero = errors.New("division by zero")
 
 func main() {
-	log.Println("Hello from go-template!")
+	slog.Info("Hello from go-template!")
 }
 
 // Add returns the sum of two integers.

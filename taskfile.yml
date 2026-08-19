@@ -7,6 +7,24 @@ tasks:
       - chmod +x ./scripts/install-tools.sh
       - ./scripts/install-tools.sh
 
+  sync:
+    desc: Install the exact dependencies in the lockfiles (run after cloning or pulling)
+    cmds:
+      - go mod download
+      - pnpm install --frozen-lockfile
+
+  upgrade:
+    desc: Upgrade all dependencies to their latest versions and update the lockfiles
+    cmds:
+      - go get -u ./...
+      - go mod tidy
+      - pnpm update --latest
+
+  run_ci:
+    desc: Run the CI pipeline locally
+    cmds:
+      - act -n
+
   test:
     desc: Run tests
     cmds:

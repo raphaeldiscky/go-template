@@ -2,10 +2,6 @@ name: CI
 
 on: [push]
 
-env:
-  GO_VERSION: "1.26.4"
-  NODE_VERSION: "20"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,10 +9,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Go
-        uses: actions/setup-go@v5
+      # Installs go, node and pnpm from .prototools — the single source of
+      # truth for every toolchain version in this repo.
+      - name: Setup Toolchain
+        uses: moonrepo/setup-toolchain@v0
         with:
-          go-version: ${{ env.GO_VERSION }}
+          auto-install: true
 
       - name: Install Task
         uses: arduino/setup-task@v2
@@ -24,17 +22,12 @@ jobs:
           version: 3.x
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install Dependencies
-        run: task install_tools
+      - name: Install Tools
+        run: |
+          task install_tools
+          # go install drops binaries in GOPATH/bin, which is not on PATH by
+          # default; actions/setup-go used to add it for us.
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
 
       - name: Cache Go modules
         uses: actions/cache@v4
@@ -50,7 +43,8 @@ jobs:
         run: |
           task format
           if [ -n "$(git status --porcelain)" ]; then
-            echo "Code is not formatted properly. Please run 'task format'"
+            echo "Working tree is dirty after 'task format'. Please run it locally."
+            git status --porcelain
             git diff
             exit 1
           fi
